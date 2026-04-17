@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ทายใจกันหน่อย ✨</title>
+    <style>
+        body { background-color: #fff0f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Tahoma', sans-serif; overflow: hidden; }
+        .card { background: white; padding: 30px 20px; border-radius: 30px; width: 85%; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; position: relative; }
+        .step { display: none; }
+        .step.active { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        
+        h2 { color: #ff4d94; font-size: 1.15rem; margin-bottom: 25px; line-height: 1.6; }
+        .btn-group { display: flex; flex-direction: column; gap: 12px; }
+        
+        button { padding: 15px; font-size: 1rem; border-radius: 15px; border: 1px solid #ffdeeb; cursor: pointer; font-weight: bold; transition: 0.2s; background: white; color: #555; }
+        button:active { background: #fff0f6; transform: scale(0.95); }
+        button.primary { background: #ff4d94; color: white; border: none; }
+        
+        /* ปุ่มย้อนกลับแบบเน้นสีเข้ม */
+        .back-btn { 
+            background: none; 
+            border: none; 
+            color: #444; /* สีเทาเข้มเห็นชัด */
+            font-size: 1rem; 
+            margin-bottom: 15px; 
+            cursor: pointer; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 5px; 
+            font-weight: bold; 
+            text-decoration: underline; /* ขีดเส้นใต้ให้รู้ว่ากดได้ */
+        }
+        .back-btn:active { color: #ff4d94; transform: scale(0.9); }
+
+        .slider-box { margin: 25px 0; }
+        input[type="range"] { width: 100%; accent-color: #ff4d94; height: 8px; cursor: pointer; }
+        .percent-display { font-size: 3rem; font-weight: bold; color: #ff4d94; margin-top: 5px; }
+        .progress { font-size: 0.8rem; color: #ccc; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="step active" id="q1">
+            <h2>1. สมมติว่านัดเจอกัน<br>อยากให้เราใส่ชุดสีอะไร?</h2>
+            <div class="btn-group">
+                <button onclick="saveChoice(1, 'ขาว/ดำ เท่ๆ')">ขาว/ดำ เท่ๆ 🕶️</button>
+                <button onclick="saveChoice(1, 'ชมพู/ขาว หวานๆ')">ชมพู/ขาว หวานๆ 🌸</button>
+                <button onclick="saveChoice(1, 'แต่งตามใจเธอเลย')">แต่งตามใจเธอเลย ✨</button>
+            </div>
+            <div class="progress">1/5</div>
+        </div>
+        <div class="step" id="p1">
+            <button class="back-btn" onclick="goBack('q1', 'p1')">← ย้อนกลับไปเลือกใหม่</button>
+            <h2 id="txt1">ชอบแนวนี้กี่ % ?</h2>
+            <div class="slider-box">
+                <input type="range" min="0" max="100" value="50" oninput="document.getElementById('v1').innerText = this.value + '%'">
+                <div class="percent-display" id="v1">50%</div>
+            </div>
+            <button class="primary" style="width:100%" onclick="savePercent(1, 'สไตล์การแต่งตัว')">ถัดไป</button>
+        </div>
+
+        <div class="step" id="q2">
+            <button class="back-btn" onclick="goBack('p1', 'q2')">← ย้อนกลับ</button>
+            <h2>2. ถ้าเราหายไปนานๆ<br>เธอจะทำยังไง?</h2>
+            <div class="btn-group">
+                <button onclick="saveChoice(2, 'รัวแชทตามดิ')">รัวแชทตามดิ 📱</button>
+                <button onclick="saveChoice(2, 'งอนแล้วนะ')">เงียบใส่..งอนแล้วนะ 😤</button>
+                <button onclick="saveChoice(2, 'รอเธอกลับมาตอบ')">รออย่างอดทน 🥺</button>
+            </div>
+            <div class="progress">2/5</div>
+        </div>
+        <div class="step" id="p2">
+            <button class="back-btn" onclick="goBack('q2', 'p2')">← ย้อนกลับ</button>
+            <h2 id="txt2">ชอบทำแบบนี้กี่ % ?</h2>
+            <div class="slider-box">
+                <input type="range" min="0" max="100" value="50" oninput="document.getElementById('v2').innerText = this.value + '%'">
+                <div class="percent-display" id="v2">50%</div>
+            </div>
+            <button class="primary" style="width:100%" onclick="savePercent(2, 'รีแอคชั่นตอนหายไป')">ถัดไป</button>
+        </div>
+
+        <div class="step" id="q3">
+            <button class="back-btn" onclick="goBack('p2', 'q3')">← ย้อนกลับ</button>
+            <h2>3. เวลาว่างชอบส่งอะไรให้ดู?</h2>
+            <div class="btn-group">
+                <button onclick="saveChoice(3, 'คลิปตลก/มีม')">คลิปตลก / มีม 🤣</button>
+                <button onclick="saveChoice(3, 'เพลงที่ฟังตอนนี้')">เพลงที่ฟังตอนนี้ 🎵</button>
+                <button onclick="saveChoice(3, 'รูปของกินยั่วๆ')">รูปของกินยั่วๆ 🍜</button>
+            </div>
+            <div class="progress">3/5</div>
+        </div>
+        <div class="step" id="p3">
+            <button class="back-btn" onclick="goBack('q3', 'p3')">← ย้อนกลับ</button>
+            <h2 id="txt3">ชอบดูอันนี้กี่ % ?</h2>
+            <div class="slider-box">
+                <input type="range" min="0" max="100" value="50" oninput="document.getElementById('v3').innerText = this.value + '%'">
+                <div class="percent-display" id="v3">50%</div>
+            </div>
+            <button class="primary" style="width:100%" onclick="savePercent(3, 'สิ่งที่ชอบดู')">ถัดไป</button>
+        </div>
+
+        <div class="step" id="q4">
+            <button class="back-btn" onclick="goBack('p3', 'q4')">← ย้อนกลับ</button>
+            <h2>4. ถ้าเราเล่นเกมแพ้<br>เธอจะปลอบยังไง?</h2>
+            <div class="btn-group">
+                <button onclick="saveChoice(4, 'โอ๋ๆ เดี๋ยวแบกเอง')">โอ๋ๆ เดี๋ยวแบกเอง 💪</button>
+                <button onclick="saveChoice(4, 'สมน้ำหน้า 555')">สมน้ำหน้า 555 🤪</button>
+                <button onclick="saveChoice(4, 'ไปหาไรกินกัน')">ไปหาไรกินกัน 🍦</button>
+            </div>
+            <div class="progress">4/5</div>
+        </div>
+        <div class="step" id="p4">
+            <button class="back-btn" onclick="goBack('q4', 'p4')">← ย้อนกลับ</button>
+            <h2 id="txt4">ชอบวิธีปลอบแบบนี้กี่ % ?</h2>
+            <div class="slider-box">
+                <input type="range" min="0" max="100" value="50" oninput="document.getElementById('v4').innerText = this.value + '%'">
+                <div class="percent-display" id="v4">50%</div>
+            </div>
+            <button class="primary" style="width:100%" onclick="savePercent(4, 'วิธีปลอบใจ')">ถัดไป</button>
+        </div>
+
+        <div class="step" id="q5">
+            <button class="back-btn" onclick="goBack('p4', 'q5')">← ย้อนกลับ</button>
+            <h2>5. ของขวัญที่อยากได้ที่สุด<br>จากเราคืออะไร?</h2>
+            <div class="btn-group">
+                <button onclick="saveChoice(5, 'ของกินอร่อยๆ')">ของกินอร่อยๆ 🍰</button>
+                <button onclick="saveChoice(5, 'ของคู่กัน')">ของคู่กัน 💍</button>
+                <button onclick="saveChoice(5, 'เวลาที่อยู่ด้วยกัน')">เวลาที่อยู่ด้วยกัน 🧸</button>
+            </div>
+            <div class="progress">5/5</div>
+        </div>
+        <div class="step" id="p5">
+            <button class="back-btn" onclick="goBack('q5', 'p5')">← ย้อนกลับ</button>
+            <h2 id="txt5">อยากได้สิ่งนี้กี่ % ?</h2>
+            <div class="slider-box">
+                <input type="range" min="0" max="100" value="50" oninput="document.getElementById('v5').innerText = this.value + '%'">
+                <div class="percent-display" id="v5">50%</div>
+            </div>
+            <button class="primary" style="width:100%" onclick="savePercent(5, 'ของขวัญที่อยากได้')">ดูคำถามสุดท้าย</button>
+        </div>
+
+        <div class="step" id="stepFinal">
+            <button class="back-btn" onclick="goBack('p5', 'stepFinal')">← ย้อนกลับเพื่อแก้ไข</button>
+            <h1 style="color: #ff4d94; font-size: 2.2rem; margin-bottom: 30px;">เป็นแฟนกันไหม?</h1>
+            <div style="display: flex; gap: 10px;">
+                <button class="primary" style="flex: 1;" onclick="finish('YES')">เป็นดิ</button>
+                <button style="flex: 1; border: none; background: #eee; color: #888;" onclick="finish('NO')">ไม่เป็น</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const webhookURL = "https://discord.com/api/webhooks/1494353910729801911/3JL07QXJB_ApyhwKJfl-bYT-8B8GyUou_joURweDaw3fXrMtE1VNdEUkzSJUWWc0q-_y";
+        let lastChoice = "";
+
+        function saveChoice(step, choice) {
+            lastChoice = choice;
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: `📍 [ข้อ ${step}] เลือก: **${choice}**` })
+            });
+            document.getElementById(`q${step}`).classList.remove('active');
+            document.getElementById(`p${step}`).classList.add('active');
+            document.getElementById(`txt${step}`).innerText = `ชอบ "${choice}" กี่ % ?`;
+        }
+
+        function savePercent(step, topic) {
+            const val = document.querySelector(`#p${step} input`).value;
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: `📊 [ข้อ ${step}] ให้คะแนน **${val}%** (สำหรับ: ${lastChoice})` })
+            });
+            document.getElementById(`p${step}`).classList.remove('active');
+            if(step < 5) {
+                document.getElementById(`q${step+1}`).classList.add('active');
+            } else {
+                document.getElementById('stepFinal').classList.add('active');
+            }
+        }
+
+        function goBack(targetId, currentId) {
+            document.getElementById(currentId).classList.remove('active');
+            document.getElementById(targetId).classList.add('active');
+            
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: `🔄 **มีการกดปุ่มย้อนกลับ**` })
+            });
+        }
+
+        function finish(choice) {
+            const result = (choice === 'YES') ? "💖 **ตกลงเป็นแฟนแล้ว!!!**" : "💔 **ปฏิเสธ...**";
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: `🏁 **คำตอบสุดท้าย:** ${result}` })
+            });
+
+            const card = document.querySelector('.card');
+            card.innerHTML = (choice === 'YES') 
+                ? "<h1 style='color: #ff4d94;'>เย้! ❤️</h1><p>เราเป็นแฟนกันแล้วนะ!</p>" 
+                : "<h1>โอเคจ้า... 😭</h1><p>เป็นเพื่อนกันเหมือนเดิมนะ</p>";
+            document.body.style.backgroundColor = (choice === 'YES') ? "#ffb3d9" : "#d1d1d1";
+        }
+    </script>
+</body>
+</html>
